@@ -41,4 +41,9 @@ public class FabriqueVuesTerminalImpl implements FabriqueVues {
     public Menu creerMenu() {
         return new MenulTerminalImpl(controleur);
     }
+
+    @Override
+    public EnvoiMessage creerEnvoiMessage() {
+        return new EnvoiMessageTerminalImpl(controleur);
+    }
 }

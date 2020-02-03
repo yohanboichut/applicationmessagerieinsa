@@ -14,4 +14,6 @@ public interface FabriqueVues {
     Connexion creerConnexion();
 
     Menu creerMenu();
+
+    EnvoiMessage creerEnvoiMessage();
 }

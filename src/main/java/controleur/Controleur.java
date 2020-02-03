@@ -3,6 +3,8 @@ package controleur;
 import modele.*;
 import vues.*;
 
+import java.util.Collection;
+
 public class Controleur {
 
 
@@ -18,6 +20,11 @@ public class Controleur {
     Connexion vueConnexion;
 
     Menu vueMenu;
+
+
+    EnvoiMessage vueEnvoiMessage;
+
+    private long identifiant;
 
     public Controleur(FabriqueFacadeApplicationMessagerie fabriqueFacadeApplicationMessagerie,
                       FabriqueVues fabriqueVues) {
@@ -75,7 +82,7 @@ public class Controleur {
 
     public void connexion(String login, String password) {
         try {
-            facadeApplicationMessagerie.connexion(login,password);
+            this.identifiant = facadeApplicationMessagerie.connexion(login,password);
             this.vueMenu = this.fabriqueVues.creerMenu();
             this.vueMenu.afficher();
 
@@ -97,5 +104,42 @@ public class Controleur {
 
     public void validerChoixMenu(int choix) {
 
+        switch (choix){
+            case 1: {
+                this.vueEnvoiMessage = fabriqueVues.creerEnvoiMessage();
+                this.vueEnvoiMessage.afficher();
+            }
+            case 2 : {
+                this.deconnexion();
+            }
+
+        }
+    }
+
+    public Collection<UtilisateurDTO> getUtilisateurs() throws UtilisateurNonConnecteException, UtilisateurInexistantException {
+        return this.facadeApplicationMessagerie.getListeDesInscrits(this.identifiant);
+    }
+
+    public void envoyerMessage(long id, String message) {
+        try {
+            this.facadeApplicationMessagerie.envoyerUnMessage(this.identifiant,id,message);
+            this.vueEnvoiMessage.confirmation();
+            this.vueMenu.afficher();
+        } catch (UtilisateurNonConnecteException e) {
+            this.vueEnvoiMessage.erreur("L'utilisateur n'est pas connecté");
+            this.deconnexion();
+        } catch (UtilisateurInexistantException e) {
+            this.vueEnvoiMessage.erreur("Le destinataire spécifié n'existe pas ("+id+")");
+            this.vueMenu.afficher();
+        }
+    }
+
+    public void deconnexion() {
+        try {
+            this.facadeApplicationMessagerie.deconnexion(this.identifiant);
+            this.vueAccueil.afficher();
+        } catch (InformationsNonConformesException e) {
+
+        }
     }
 }
