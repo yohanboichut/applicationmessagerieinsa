@@ -1,5 +1,10 @@
 package controleur;
 
+import facade.FabriqueFacadeApplicationMessagerie;
+import facade.FacadeApplicationMessagerie;
+import facade.MessageLight;
+import facade.UtilisateurLight;
+import facade.exceptions.*;
 import modele.*;
 import vues.*;
 
@@ -123,7 +128,7 @@ public class Controleur {
         }
     }
 
-    public Collection<UtilisateurDTO> getUtilisateurs() throws UtilisateurNonConnecteException, UtilisateurInexistantException {
+    public Collection<UtilisateurLight> getUtilisateurs() throws UtilisateurNonConnecteException, UtilisateurInexistantException {
         return this.facadeApplicationMessagerie.getListeDesInscrits(this.identifiant);
     }
 
@@ -150,7 +155,7 @@ public class Controleur {
         }
     }
 
-    public Collection<MessageDTO> getMesMessages() throws UtilisateurNonConnecteException {
+    public Collection<MessageLight> getMesMessages() throws UtilisateurNonConnecteException {
         return this.facadeApplicationMessagerie.getMesMessages(this.identifiant);
     }
 

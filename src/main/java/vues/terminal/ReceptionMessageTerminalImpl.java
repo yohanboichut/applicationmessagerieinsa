@@ -1,6 +1,8 @@
 package vues.terminal;
 
 import controleur.Controleur;
+import facade.MessageLight;
+import facade.exceptions.UtilisateurNonConnecteException;
 import modele.*;
 import vues.EnvoiMessage;
 import vues.ReceptionMessage;
@@ -23,12 +25,12 @@ public class ReceptionMessageTerminalImpl implements ReceptionMessage {
 
     @Override
     public void afficher() {
-        Collection<MessageDTO> messages = null;
+        Collection<MessageLight> messages = null;
         try {
             messages = controleur.getMesMessages();
             System.out.println("Voici tous vos messages reçus");
 
-            for (MessageDTO u: messages) {
+            for (MessageLight u: messages) {
                 System.out.println("De "+ u.getEnvoyeur().getLogin()+" : "+u.getContenu());
             }
 

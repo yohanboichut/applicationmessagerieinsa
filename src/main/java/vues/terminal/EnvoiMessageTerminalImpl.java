@@ -1,9 +1,9 @@
 package vues.terminal;
 
 import controleur.Controleur;
-import modele.UtilisateurDTO;
-import modele.UtilisateurInexistantException;
-import modele.UtilisateurNonConnecteException;
+import facade.UtilisateurLight;
+import facade.exceptions.UtilisateurInexistantException;
+import facade.exceptions.UtilisateurNonConnecteException;
 import vues.Accueil;
 import vues.EnvoiMessage;
 
@@ -28,12 +28,12 @@ public class EnvoiMessageTerminalImpl implements EnvoiMessage {
         Scanner scanner = new Scanner(System.in);
 
 
-        Collection<UtilisateurDTO> utilisateurs = null;
+        Collection<UtilisateurLight> utilisateurs = null;
         try {
             utilisateurs = controleur.getUtilisateurs();
             System.out.println("Voici la liste des utilisateurs :");
 
-            for (UtilisateurDTO u: utilisateurs) {
+            for (UtilisateurLight u: utilisateurs) {
                 System.out.println(u.getId()+" : "+u.getLogin());
             }
 

@@ -1,7 +1,8 @@
 package programme;
 
 import controleur.Controleur;
-import modele.FabriqueFacadeApplicationMessagerie;
+import facade.FabriqueFacadeApplicationMessagerie;
+import facade.FabriqueFacadeApplicationMessagerieImpl;
 import vues.FabriqueVues;
 import vues.terminal.FabriqueVuesTerminalImpl;
 
