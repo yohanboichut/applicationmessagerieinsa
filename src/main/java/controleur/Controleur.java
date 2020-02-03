@@ -25,6 +25,7 @@ public class Controleur {
     EnvoiMessage vueEnvoiMessage;
 
     private long identifiant;
+    private ReceptionMessage vueReceptionMessage;
 
     public Controleur(FabriqueFacadeApplicationMessagerie fabriqueFacadeApplicationMessagerie,
                       FabriqueVues fabriqueVues) {
@@ -84,7 +85,7 @@ public class Controleur {
         try {
             this.identifiant = facadeApplicationMessagerie.connexion(login,password);
             this.vueMenu = this.fabriqueVues.creerMenu();
-            this.vueMenu.afficher();
+            this.goToMenu();
 
         } catch (LoginDejaPrisException e) {
             this.vueConnexion.erreur("le login "+login+ " est déjà pris !!");
@@ -109,7 +110,13 @@ public class Controleur {
                 this.vueEnvoiMessage = fabriqueVues.creerEnvoiMessage();
                 this.vueEnvoiMessage.afficher();
             }
+
+
             case 2 : {
+                this.vueReceptionMessage = fabriqueVues.creerReceptionMessage();
+                vueReceptionMessage.afficher();
+            }
+            case 3 : {
                 this.deconnexion();
             }
 
@@ -124,13 +131,13 @@ public class Controleur {
         try {
             this.facadeApplicationMessagerie.envoyerUnMessage(this.identifiant,id,message);
             this.vueEnvoiMessage.confirmation();
-            this.vueMenu.afficher();
+            this.goToMenu();
         } catch (UtilisateurNonConnecteException e) {
             this.vueEnvoiMessage.erreur("L'utilisateur n'est pas connecté");
             this.deconnexion();
         } catch (UtilisateurInexistantException e) {
             this.vueEnvoiMessage.erreur("Le destinataire spécifié n'existe pas ("+id+")");
-            this.vueMenu.afficher();
+            this.goToMenu();
         }
     }
 
@@ -141,5 +148,13 @@ public class Controleur {
         } catch (InformationsNonConformesException e) {
 
         }
+    }
+
+    public Collection<MessageDTO> getMesMessages() throws UtilisateurNonConnecteException {
+        return this.facadeApplicationMessagerie.getMesMessages(this.identifiant);
+    }
+
+    public void goToMenu() {
+        this.vueMenu.afficher();
     }
 }

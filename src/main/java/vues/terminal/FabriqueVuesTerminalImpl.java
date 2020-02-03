@@ -46,4 +46,9 @@ public class FabriqueVuesTerminalImpl implements FabriqueVues {
     public EnvoiMessage creerEnvoiMessage() {
         return new EnvoiMessageTerminalImpl(controleur);
     }
+
+    @Override
+    public ReceptionMessage creerReceptionMessage() {
+        return new ReceptionMessageTerminalImpl(controleur);
+    }
 }

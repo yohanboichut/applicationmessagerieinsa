@@ -16,4 +16,6 @@ public interface FabriqueVues {
     Menu creerMenu();
 
     EnvoiMessage creerEnvoiMessage();
+
+    ReceptionMessage creerReceptionMessage();
 }

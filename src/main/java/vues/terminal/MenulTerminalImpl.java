@@ -29,13 +29,15 @@ public class MenulTerminalImpl implements Menu {
 
             System.out.println("1 - envoyer un message");
 
-            System.out.println("2 - se déconnecter");
+            System.out.println("2 - consulter messages");
+
+            System.out.println("3 - se déconnecter");
 
             System.out.println("Choix ?");
 
 
             choix = scanner.nextInt();
-        } while (choix <1 || choix>2);
+        } while (choix <1 || choix>3);
 
         controleur.validerChoixMenu(choix);
 
